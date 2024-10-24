@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=RealizarRetiroUI
+comment1.params=primaryStage
+comment1.target=void\ start(javafx.stage.Stage)
+comment2.params=usuarioManager\ numeroCuenta
+comment2.target=logicabancaria.Cuenta\ buscarCuentaPorNumero(logicaalmacenamiento.UsuarioManager,\ int)
+comment3.params=args
+comment3.target=void\ main(java.lang.String[])
+numComments=4

@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=CuentaGUI
+comment1.params=primaryStage
+comment1.target=void\ start(javafx.stage.Stage)
+comment2.params=alertType\ title\ message
+comment2.target=void\ showAlert(javafx.scene.control.Alert.AlertType,\ java.lang.String,\ java.lang.String)
+comment3.params=args
+comment3.target=void\ main(java.lang.String[])
+numComments=4

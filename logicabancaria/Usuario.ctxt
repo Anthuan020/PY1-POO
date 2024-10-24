@@ -1,0 +1,21 @@
+#BlueJ class context
+comment0.target=Usuario
+comment1.params=pName\ pId\ pNumberTel\ pMail
+comment1.target=Usuario(java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String)
+comment2.params=
+comment2.target=java.lang.String\ getName()
+comment3.params=
+comment3.target=java.lang.String\ getId()
+comment4.params=
+comment4.target=java.lang.String\ getNumberTel()
+comment5.params=
+comment5.target=java.lang.String\ getMail()
+comment6.params=
+comment6.target=java.util.List\ getAccounts()
+comment7.params=cuenta
+comment7.target=void\ addAccount(Cuenta)
+comment8.params=nuevoNumeroTel
+comment8.target=void\ setNumberTel(java.lang.String)
+comment9.params=nuevoMail
+comment9.target=void\ setMail(java.lang.String)
+numComments=10

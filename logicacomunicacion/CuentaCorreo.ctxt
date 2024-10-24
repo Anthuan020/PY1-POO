@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=CuentaCorreo
+comment0.text=\r\n\ Clase\ para\ enviar\ correos\ electr\u00F3nicos.\r\n\ \r\n\ @author\ Nabyell\ Leon\ Valerin\r\n\ @version\ 1.0\r\n
+comment1.params=destinatario\ asunto\ cuerpo
+comment1.target=CuentaCorreo(java.lang.String,\ java.lang.String,\ java.lang.String)
+comment2.params=
+comment2.target=javax.mail.PasswordAuthentication\ getPasswordAuthentication()
+comment3.params=
+comment3.target=void\ enviarCorreo()
+numComments=4
