@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.target=XmlParser
+comment0.text=\r\n\ <code>XmlParser</code>\ realiza\ parseado\ de\ un\ documento\ <code>XML</code>.\r\n\ @author\ Hans\ Araya\r\n\ @version\ 1.0\r\n
+comment1.params=data
+comment1.target=XmlParser(java.lang.String)
+comment1.text=\r\n\ Constructor\ del\ <code>XmlParser</code>\ encargado\ de\ definir\ las\ herramientas\ para\ parseo\ de\ XML\r\n\ @param\ data\ Documento\ XML\r\n\ @throws\ SAXException\r\n\ @throws\ IOException\r\n\ @throws\ ParserConfigurationException\r\n
+comment2.params=tag
+comment2.target=java.lang.String\ getValue(java.lang.String)
+comment2.text=\r\n\ Obtiene\ el\ valor\ de\ una\ etiqueta\ en\ un\ documento\ XML\r\n\ @param\ tag\ La\ etiqueta\ del\ cual\ extraer\ el\ valor\r\n\ @return\ <code>String</code>\ con\ el\ valor\ de\ la\ etiqueta\ enviada\ por\ par\uFFFDmetro\r\n
+comment3.params=string
+comment3.target=java.lang.String\ replaceChars(java.lang.String)
+numComments=4
