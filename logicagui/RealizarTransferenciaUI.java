@@ -8,8 +8,11 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import logicabancaria.Cuenta;
 import logicaalmacenamiento.UsuarioManager;
+import logicacomunicacion.CodigoSecreto;
 
 public class RealizarTransferenciaUI extends Application {
+
+    private int codigoVerificacion; // Almacena el código de verificación enviado
 
     @Override
     public void start(Stage primaryStage) {
@@ -35,38 +38,43 @@ public class RealizarTransferenciaUI extends Application {
         pinInput.setPromptText("Ingrese su PIN");
         GridPane.setConstraints(pinInput, 1, 1);
 
-        // Campo para la palabra enviada por mensaje de texto
-        Label palabraLabel = new Label("Palabra recibida por SMS:");
-        GridPane.setConstraints(palabraLabel, 0, 2);
-        TextField palabraInput = new TextField();
-        palabraInput.setPromptText("Ingrese la palabra enviada");
-        GridPane.setConstraints(palabraInput, 1, 2);
+        // Botón para enviar el código de verificación
+        Button enviarCodigoBtn = new Button("Enviar Código de Verificación");
+        GridPane.setConstraints(enviarCodigoBtn, 1, 2);
+        enviarCodigoBtn.setMinWidth(200); // Opcional: ajustar el ancho del botón
+
+        // Campo para el código de verificación enviado por correo
+        Label codigoLabel = new Label("Código de Verificación (enviado por correo):");
+        GridPane.setConstraints(codigoLabel, 0, 3);
+        TextField codigoInput = new TextField();
+        codigoInput.setPromptText("Ingrese el código recibido");
+        GridPane.setConstraints(codigoInput, 1, 3);
 
         // Campo para el monto de la transferencia
         Label montoLabel = new Label("Monto a Transferir (Colones):");
-        GridPane.setConstraints(montoLabel, 0, 3);
+        GridPane.setConstraints(montoLabel, 0, 4);
         TextField montoInput = new TextField();
         montoInput.setPromptText("Ingrese el monto en colones (sin decimales)");
-        GridPane.setConstraints(montoInput, 1, 3);
+        GridPane.setConstraints(montoInput, 1, 4);
 
         // Campo para el número de cuenta destino
         Label cuentaDestinoLabel = new Label("Cuenta Destino:");
-        GridPane.setConstraints(cuentaDestinoLabel, 0, 4);
+        GridPane.setConstraints(cuentaDestinoLabel, 0, 5);
         TextField cuentaDestinoInput = new TextField();
         cuentaDestinoInput.setPromptText("Ingrese el número de cuenta destino");
-        GridPane.setConstraints(cuentaDestinoInput, 1, 4);
+        GridPane.setConstraints(cuentaDestinoInput, 1, 5);
 
         // Botón para realizar la transferencia
         Button transferirBtn = new Button("Transferir");
-        GridPane.setConstraints(transferirBtn, 1, 5);
+        GridPane.setConstraints(transferirBtn, 1, 6);
 
         // Resultado de la transferencia
         Label resultadoLabel = new Label();
-        GridPane.setConstraints(resultadoLabel, 1, 6);
+        GridPane.setConstraints(resultadoLabel, 1, 7);
 
         // Añadiendo todos los nodos al GridPane
         grid.getChildren().addAll(cuentaOrigenLabel, cuentaOrigenInput, pinLabel, pinInput,
-                palabraLabel, palabraInput, montoLabel, montoInput, cuentaDestinoLabel, cuentaDestinoInput,
+                enviarCodigoBtn, codigoLabel, codigoInput, montoLabel, montoInput, cuentaDestinoLabel, cuentaDestinoInput,
                 transferirBtn, resultadoLabel);
 
         // Configurando la escena
@@ -74,21 +82,12 @@ public class RealizarTransferenciaUI extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        // Acción del botón de transferencia
-        transferirBtn.setOnAction(e -> {
+        // Acción del botón de enviar código
+        enviarCodigoBtn.setOnAction(e -> {
             try {
-                // Leer valores de entrada
+                // Leer el número de cuenta origen
                 int cuentaOrigenId = Integer.parseInt(cuentaOrigenInput.getText());
                 String pin = pinInput.getText();
-                String palabra = palabraInput.getText();
-                double montoColones = Double.parseDouble(montoInput.getText());
-                int cuentaDestinoId = Integer.parseInt(cuentaDestinoInput.getText());
-
-                // Validaciones básicas
-                if (palabra.isEmpty()) {
-                    resultadoLabel.setText("Error: La palabra recibida por SMS no puede estar vacía.");
-                    return;
-                }
 
                 // Obtener la cuenta origen usando UsuarioManager
                 Cuenta cuentaOrigen = buscarCuentaPorNumero(UsuarioManager.getInstancia(), cuentaOrigenId);
@@ -103,7 +102,41 @@ public class RealizarTransferenciaUI extends Application {
                     return;
                 }
 
-                // Verificar si la cuenta destino existe
+                // Generar y enviar código de verificación
+                CodigoSecreto codigoSecreto = new CodigoSecreto();
+                codigoVerificacion = codigoSecreto.CodigoSecretoCreate();
+                String emailDestinatario = cuentaOrigen.getOwner().getMail();
+                codigoSecreto.EnviarCodigo(emailDestinatario, codigoVerificacion);
+                resultadoLabel.setText("Código de verificación enviado a " + emailDestinatario);
+
+            } catch (Exception ex) {
+                resultadoLabel.setText("Error: " + ex.getMessage());
+            }
+        });
+
+        // Acción del botón de transferencia
+        transferirBtn.setOnAction(e -> {
+            try {
+                // Leer valores de entrada
+                int cuentaOrigenId = Integer.parseInt(cuentaOrigenInput.getText());
+                String pin = pinInput.getText();
+                double montoColones = Double.parseDouble(montoInput.getText());
+                int cuentaDestinoId = Integer.parseInt(cuentaDestinoInput.getText());
+
+                // Obtener la cuenta origen usando UsuarioManager
+                Cuenta cuentaOrigen = buscarCuentaPorNumero(UsuarioManager.getInstancia(), cuentaOrigenId);
+                if (cuentaOrigen == null) {
+                    resultadoLabel.setText("Error: Cuenta origen no encontrada.");
+                    return;
+                }
+
+                // Comprobar el código de verificación
+                if (Integer.parseInt(codigoInput.getText()) != codigoVerificacion) {
+                    resultadoLabel.setText("Error: Código de verificación incorrecto.");
+                    return;
+                }
+
+                // Verifica si la cuenta destino existe
                 Cuenta cuentaDestino = buscarCuentaPorNumero(UsuarioManager.getInstancia(), cuentaDestinoId);
                 if (cuentaDestino == null) {
                     resultadoLabel.setText("Error: Cuenta destino no encontrada.");

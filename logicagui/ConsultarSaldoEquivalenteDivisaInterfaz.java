@@ -12,12 +12,10 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import logicabancaria.Cuenta;
 import logicabancaria.Usuario;
+import logicabancaria.TipoCambio; // Importar la clase TipoCambio
 import logicaalmacenamiento.UsuarioManager;
 
 public class ConsultarSaldoEquivalenteDivisaInterfaz extends Application {
-
-    // Simulación del tipo de cambio del dólar
-    private static final double TIPO_CAMBIO_COMPRA = 540.00; // Simulación de tipo de cambio
 
     @Override
     public void start(Stage primaryStage) {
@@ -57,17 +55,21 @@ public class ConsultarSaldoEquivalenteDivisaInterfaz extends Application {
                 Cuenta cuenta = buscarCuenta(numeroCuenta, pin);
 
                 if (cuenta != null) {
+                    // Obtener el tipo de cambio actual
+                    TipoCambio tipoCambio = new TipoCambio();
+                    double tipoCambioCompra = tipoCambio.getCompra(); // Obtener el tipo de cambio de compra
+
                     // Obtener el saldo en colones
                     double saldoColones = cuenta.getBalance();
-                    double saldoDolares = saldoColones / TIPO_CAMBIO_COMPRA;
+                    double saldoDolares = saldoColones / tipoCambioCompra;
 
                     // Mostrar información al usuario
                     String mensaje = String.format(
                         "Estimado usuario: %s,\n" +
                         "El saldo actual de su cuenta %d es de %.2f dólares.\n" +
                         "Para esta conversión se utilizó el tipo de cambio del dólar (compra).\n" +
-                        "Según la simulación, el tipo de cambio de compra del dólar es de: %.2f",
-                        cuenta.getOwner().getName(), cuenta.getId(), saldoDolares, TIPO_CAMBIO_COMPRA
+                        "El tipo de cambio de compra del dólar es: %.2f",
+                        cuenta.getOwner().getName(), cuenta.getId(), saldoDolares, tipoCambioCompra
                     );
                     mostrarAlerta("Saldo en Dólares", mensaje);
                 } else {

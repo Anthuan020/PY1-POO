@@ -10,6 +10,7 @@ import logicabancaria.Cuenta;
 import logicabancaria.Transaccion;
 import logicaalmacenamiento.UsuarioManager;
 import logicabancaria.Usuario;
+import logicabancaria.TipoCambio; // Importar la clase TipoCambio
 
 public class ConsultarEstadoDeCuentaDolarizado extends Application {
 
@@ -48,8 +49,9 @@ public class ConsultarEstadoDeCuentaDolarizado extends Application {
                 
                 // Verificar el PIN
                 if (cuenta.verificarPin(pin)) {
-                    // Simular tipo de cambio de compra (esto será una variable global o configuración)
-                    double tipoCambioCompra = 540.50; // Ejemplo de tipo de cambio
+                    // Obtener el tipo de cambio actual
+                    TipoCambio tipoCambio = new TipoCambio();
+                    double tipoCambioCompra = tipoCambio.getCompra(); // Obtener el tipo de cambio de compra
 
                     // Obtener saldo en colones y convertir a dólares
                     double saldoColones = cuenta.getBalance(); // Asumimos que el saldo está en colones

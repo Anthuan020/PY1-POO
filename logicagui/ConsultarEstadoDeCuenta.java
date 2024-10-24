@@ -7,6 +7,10 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import logicabancaria.Cuenta;
+import logicabancaria.Usuario;
+import logicaalmacenamiento.UsuarioManager;
+
 public class ConsultarEstadoDeCuenta extends Application {
 
     @Override
@@ -34,23 +38,29 @@ public class ConsultarEstadoDeCuenta extends Application {
             String numeroCuenta = cuentaField.getText();
             String pin = pinField.getText();
             
-            // Aquí iría la lógica para verificar la cuenta y el PIN
-            // Simulación de la consulta (esto será reemplazado con la lógica)
-            if (!numeroCuenta.isEmpty() && !pin.isEmpty()) {
-                // Lógica para consultar el estado de cuenta y rellenar el área de texto
-                // Simulación:
-                estadoCuentaArea.setText(
-                        "Estimado usuario: NOMBRE COMPLETO DEL DUEÑO\n" +
-                        "Estado de Cuenta para la cuenta: " + numeroCuenta + "\n" +
-                        "Saldo actual: XXXX.XX colones\n" +
-                        "Transacciones recientes:\n" +
-                        "1. Depósito - 200.00 colones - 01/09/2024\n" +
-                        "2. Retiro - 50.00 colones - 02/09/2024\n" +
-                        "...\n" +
-                        "Fin del estado de cuenta."
-                );
+            // Buscar el usuario por número de cuenta
+            Usuario usuario = UsuarioManager.getInstancia().buscarUsuarioPorId(numeroCuenta);
+            if (usuario != null) {
+                // Buscar la cuenta asociada al usuario
+                Cuenta cuenta = usuario.getAccounts().stream()
+                        .filter(c -> c.getId() == Integer.parseInt(numeroCuenta))
+                        .findFirst()
+                        .orElse(null);
+
+                if (cuenta != null && cuenta.verificarPin(pin)) {
+                    // Aquí se obtiene la información para mostrar en el estado de cuenta
+                    StringBuilder estado = new StringBuilder();
+                    estado.append("Saldo: ").append(cuenta.getBalance()).append("\n");
+                    estado.append("Estado: ").append(cuenta.getStatus() ? "Activa" : "Inactiva").append("\n");
+                    estado.append("Fecha de Creación: ").append(cuenta.getfechaCreacion()).append("\n");
+                    estado.append("Número de Transacciones: ").append(cuenta.getTransacciones().size()).append("\n");
+
+                    estadoCuentaArea.setText(estado.toString());
+                } else {
+                    estadoCuentaArea.setText("PIN incorrecto o cuenta no válida.");
+                }
             } else {
-                estadoCuentaArea.setText("Por favor, ingrese todos los datos requeridos.");
+                estadoCuentaArea.setText("Número de cuenta no registrado.");
             }
         });
 
