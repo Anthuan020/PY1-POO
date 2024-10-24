@@ -1,0 +1,23 @@
+#BlueJ class context
+comment0.target=TipoCambio
+comment0.text=\r\n\ <code>TipoCambio</code>\ es\ una\ clase\ que\ se\ comunica\ con\ el\ WebService\ del\ BCCR\ para\ obtener\r\n\ el\ tipo\ de\ cambio\ en\ tiempo\ real.\ Se\ comunica\ mediante\ el\ protocolo\ <code>HTTP\ GET</code>.\r\n\ S\uFFFDlo\ funciona\ con\ la\ moneda\ <strong>USD</strong>.\r\n\ @author\ Hans\ Araya\r\n\ @version\ 1.0\r\n
+comment1.params=
+comment1.target=TipoCambio()
+comment2.params=
+comment2.target=double\ getCompra()
+comment2.text=\r\n\ Devuelve\ el\ valor\ de\ <strong>COMPRA</strong>\ USD\ del\ BCCR\r\n\ @return\ <code>Double</code>\ con\ el\ valor\ del\ precio\ de\ compra.\r\n
+comment3.params=
+comment3.target=double\ getVenta()
+comment3.text=\r\n\ Devuelve\ el\ valor\ de\ <strong>VENTA</strong>\ USD\ del\ BCCR\r\n\ @return\ <code>Double</code>\ con\ el\ valor\ del\ precio\ de\ venta.\r\n
+comment4.params=
+comment4.target=java.lang.String\ getValue()
+comment4.text=\r\n\ Obtiene\ el\ XML\ del\ WebService\ del\ BCCR\ y\ parsea\ el\ documento\ para\ obtener\ el\ valor\ (dado\ por\ VALUE_TAG)\r\n\ @return\ String\r\n
+comment5.params=
+comment5.target=void\ setUrl()
+comment6.params=
+comment6.target=void\ setFecha()
+comment7.params=
+comment7.target=void\ setCompra()
+comment8.params=
+comment8.target=void\ setVenta()
+numComments=9
