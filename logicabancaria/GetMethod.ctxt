@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=GetMethod
+comment0.text=\r\n\ <code>GetMethod</code>\ realiza\ comunicaciones\ HTTP\ mediante\ el\ protocolo\ <code>GET</code>.\r\n\ @author\ Hans\ Araya\r\n\ @version\ 1.0\r\n
+comment1.params=urlToRead
+comment1.target=java.lang.String\ getHTML(java.lang.String)
+comment1.text=\r\n\ Devuelve\ un\ documento\ HTML\ a\ partir\ de\ una\ solicitud\ <code>HTTP\ GET</code>\r\n\ @param\ urlToRead\ con\ el\ URL\ a\ donde\ enviar\ la\ solicitud\ (incluido\ par\uFFFDmetros)\r\n\ @return\ <code>String</code>\ con\ el\ HTML\ dado\ por\ la\ solicitud\ HTTP\ GET\r\n\ @throws\ Exception\r\n
+numComments=2

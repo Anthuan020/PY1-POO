@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cuenta {
-    private static int idCounter = 10101; // Generador único de ID
     private int id; 
     private Usuario owner;
     private String pin; 
@@ -16,7 +15,7 @@ public class Cuenta {
     private List<Transaccion> transactions = new ArrayList<>();
     
     public Cuenta(Usuario pUser, String pPIN, double pAmount) {
-        this.id = idCounter++;
+        this.id = GeneradorID.generarID();
         this.owner = pUser;
         this.pin = pPIN;
         this.balance += pAmount;
@@ -79,7 +78,11 @@ public class Cuenta {
     public List<Transaccion> getTransacciones() {
         return transactions; // Método para obtener las transacciones
     }
-
+    
+    public boolean getStatus() {
+        return status; // Método para obtener el status
+    }
+    
     public int getId() {
         return id; // Método para obtener el ID
     }
@@ -112,5 +115,8 @@ public class Cuenta {
     public LocalDate getfechaCreacion(){
         return fechaCreacion;
     }
+    
+    private double calcularComision() {
+        return transactions.size() > 5 ? 0.02 * balance : 0;
+    }
 }
-
