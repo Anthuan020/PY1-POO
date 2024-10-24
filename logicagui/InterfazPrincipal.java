@@ -9,9 +9,37 @@ import javafx.stage.Stage;
 import logicaalmacenamiento.*;
 
 public class InterfazPrincipal extends Application {
-    
+
     public void start(Stage primaryStage) {
         Label instruccionesLabel = new Label("Ingrese un número del 1 al 21 para elegir una opción:");
+        
+        // Listado de opciones disponibles
+        TextArea opcionesArea = new TextArea(
+            "1. Crear cliente\n" +
+            "2. Crear cuenta\n" +
+            "3. Cambiar PIN\n" +
+            "4. Realizar depósito\n" +
+            "5. Realizar depósito con tipo de cambio\n" +
+            "6. Realizar retiro\n" +
+            "7. Realizar retiro con tipo de cambio\n" +
+            "8. Realizar transferencia\n" +
+            "9. Consultar transacciones\n" +
+            "10. Consultar tipo de cambio de compra\n" +
+            "11. Consultar tipo de cambio de venta\n" +
+            "12. Consultar saldo\n" +
+            "13. Consultar saldo equivalente en divisa\n" +
+            "14. Consultar estado de cuenta\n" +
+            "15. Consultar estado de cuenta dolarizado\n" +
+            "16. Cambiar número de teléfono del cliente\n" +
+            "17. Cambiar correo electrónico del cliente\n" +
+            "18. Consultar estatus de la cuenta\n" +
+            "19. Consultar cuentas por cliente\n" +
+            "20. Eliminar cuenta del cliente\n" +
+            "21. Salir"
+        );
+        opcionesArea.setEditable(false);
+        opcionesArea.setPrefHeight(300); // Ajusta el tamaño según sea necesario
+
         TextField opcionField = new TextField();
         opcionField.setPromptText("Ingrese opción");
 
@@ -26,7 +54,11 @@ public class InterfazPrincipal extends Application {
             try {
                 int opcion = Integer.parseInt(opcionTexto);
                 if (opcion >= 1 && opcion <= 21) {
-                    abrirInterfaz(opcion);
+                    if (opcion == 21) {
+                        primaryStage.close(); // Cierra la aplicación si se selecciona la opción 21
+                    } else {
+                        abrirInterfaz(opcion);
+                    }
                 } else {
                     mensajeArea.setText("Por favor, ingrese un número entre 1 y 21.");
                 }
@@ -41,11 +73,12 @@ public class InterfazPrincipal extends Application {
         grid.setHgap(10);
 
         grid.add(instruccionesLabel, 0, 0);
-        grid.add(opcionField, 0, 1);
-        grid.add(seleccionarButton, 0, 2);
-        grid.add(mensajeArea, 0, 3, 2, 1);
+        grid.add(opcionesArea, 0, 1);
+        grid.add(opcionField, 0, 2);
+        grid.add(seleccionarButton, 0, 3);
+        grid.add(mensajeArea, 0, 4, 2, 1);
 
-        Scene scene = new Scene(grid, 400, 300);
+        Scene scene = new Scene(grid, 400, 600);
         primaryStage.setTitle("Interfaz Principal - Banco");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -82,30 +115,36 @@ public class InterfazPrincipal extends Application {
                 new ConsultarTransaccionesGUI().start(nuevaVentana);
                 break;
             case 10:
-                new ConsultarEstadoDeCuenta().start(nuevaVentana);
+                new ConsultarTipoCambioGUI().start(nuevaVentana);
                 break;
             case 11:
-                new ConsultarSaldoInterfaz().start(nuevaVentana);
+                new ConsultarTipoCambioVentaGUI().start(nuevaVentana);
                 break;
             case 12:
-                new ConsultarSaldoEquivalenteDivisaInterfaz().start(nuevaVentana);
+                new ConsultarSaldoInterfaz().start(nuevaVentana);
                 break;
             case 13:
-                new ConsultarEstatusCuenta().start(nuevaVentana);
+                new ConsultarSaldoEquivalenteDivisaInterfaz().start(nuevaVentana);
                 break;
             case 14:
-                new ConsultarEstadoDeCuentaDolarizado().start(nuevaVentana);
+                new ConsultarEstadoDeCuenta().start(nuevaVentana);
                 break;
             case 15:
-                new CambiarNumeroTelefonoCliente().start(nuevaVentana);
+                new ConsultarEstadoDeCuentaDolarizado().start(nuevaVentana);
                 break;
             case 16:
-                new CambiarCorreoElectronicoCliente().start(nuevaVentana);
+                new CambiarNumeroTelefonoCliente().start(nuevaVentana);
                 break;
             case 17:
-                new ConsultarCuentasPorCliente().start(nuevaVentana);
+                new CambiarCorreoElectronicoCliente().start(nuevaVentana);
                 break;
             case 18:
+                new ConsultarEstatusCuenta().start(nuevaVentana);
+                break;
+            case 19:
+                new ConsultarCuentasPorCliente().start(nuevaVentana);
+                break;
+            case 20:
                 new EliminarCuentaCliente().start(nuevaVentana);
                 break;
             default:
