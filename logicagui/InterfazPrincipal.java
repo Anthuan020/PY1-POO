@@ -7,12 +7,19 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import logicaalmacenamiento.*;
+import logicabancaria.Usuario;
+import logicabancaria.Cuenta;
+import java.util.ArrayList;
+import java.util.List;
+import XmlEditor.XmlController;
 
 public class InterfazPrincipal extends Application {
-
+        
+    
+    
     public void start(Stage primaryStage) {
         Label instruccionesLabel = new Label("Ingrese un número del 1 al 21 para elegir una opción:");
-        
+        cargar();
         // Listado de opciones disponibles
         TextArea opcionesArea = new TextArea(
             "1. Crear cliente\n" +
@@ -55,6 +62,7 @@ public class InterfazPrincipal extends Application {
                 int opcion = Integer.parseInt(opcionTexto);
                 if (opcion >= 1 && opcion <= 21) {
                     if (opcion == 21) {
+                        guardar();
                         primaryStage.close(); // Cierra la aplicación si se selecciona la opción 21
                     } else {
                         abrirInterfaz(opcion);
@@ -147,7 +155,7 @@ public class InterfazPrincipal extends Application {
             case 20:
                 new EliminarCuentaCliente().start(nuevaVentana);
                 break;
-            default:
+            default :
                 break;
         }
     }
@@ -155,4 +163,35 @@ public class InterfazPrincipal extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+    
+    public void guardar (){
+        UsuarioManager usuarioManager = UsuarioManager.getInstancia();
+        List<Usuario> Users = usuarioManager.getUsuarios();
+        System.out.println(Users.size());
+        if (Users.size() > 0 && !Users.isEmpty()){
+            XmlController lest = new XmlController("Xmls/Usuarios.XML");
+            XmlController lestC = new XmlController("Xmls/Cuentas.XML");
+            for (Usuario usuario: Users){
+                lest.insertarUsuario(usuario);
+                List<Cuenta> cuentas = usuario.getAccounts();
+                if(cuentas.size() > 0 && !cuentas.isEmpty()){
+                    for (Cuenta account : cuentas){
+                        lestC.insertarCuenta(account);
+                    }
+                    lestC.guardarCambios();
+                }
+            }
+            lest.guardarCambios();
+        }
+    }
+    
+    public void cargar(){
+        UsuarioManager usuarioManager = UsuarioManager.getInstancia();
+        XmlController pars = new XmlController("Xmls/Usuarios.XML");
+        usuarioManager.setUsuarios(pars.extraerUsuarios());
+    }
+    
+    
+    
+    
 }

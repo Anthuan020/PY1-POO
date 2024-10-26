@@ -28,27 +28,29 @@ public class ConsultarTransaccionesGUI extends Application {
 
             // Verificación de cuenta
             Optional<Cuenta> cuentaOpt = verificarCuenta(cuentaNumero, pin);
-            if (cuentaOpt.isPresent()) {
-                Cuenta cuenta = cuentaOpt.get();
-                String nombreCompleto = cuenta.getOwner().getName(); // Obtener el nombre del dueño
-                List<Transaccion> transacciones = cuenta.getTransacciones();
-                StringBuilder result = new StringBuilder("Estimado usuario: " + nombreCompleto + ", el detalle de todas las transacciones es:\n");
-
-                // Mostrar transacciones
-                if (transacciones.isEmpty()) {
-                    result.append("No se encontraron transacciones.");
-                } else {
-                    for (Transaccion transaccion : transacciones) {
-                        result.append("Tipo: ").append(transaccion.getType())
-                              .append(", Monto: ").append(transaccion.getAmount())
-                              .append(", Fecha: ").append(transaccion.getDate())
-                              .append(", Comisión: ").append(transaccion.getCommission())
-                              .append("\n");
+            if (cuentaOpt != null){
+                if (cuentaOpt.isPresent()) {
+                    Cuenta cuenta = cuentaOpt.get();
+                    String nombreCompleto = cuenta.getOwner().getName(); // Obtener el nombre del dueño
+                    List<Transaccion> transacciones = cuenta.getTransacciones();
+                    StringBuilder result = new StringBuilder("Estimado usuario: " + nombreCompleto + ", el detalle de todas las transacciones es:\n");
+    
+                    // Mostrar transacciones
+                    if (transacciones.isEmpty()) {
+                        result.append("No se encontraron transacciones.");
+                    } else {
+                        for (Transaccion transaccion : transacciones) {
+                            result.append("Tipo: ").append(transaccion.getType())
+                                  .append(", Monto: ").append(transaccion.getAmount())
+                                  .append(", Fecha: ").append(transaccion.getDate())
+                                  .append(", Comisión: ").append(transaccion.getCommission())
+                                  .append("\n");
+                        }
                     }
+                    resultArea.setText(result.toString());
+                } else {
+                    resultArea.setText("Error: Cuenta no válida o PIN incorrecto.");
                 }
-                resultArea.setText(result.toString());
-            } else {
-                resultArea.setText("Error: Cuenta no válida o PIN incorrecto.");
             }
         });
 
