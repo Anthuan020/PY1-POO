@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<root>
+    <Usuario id="703240368">
+        <Nombre>derrick</Nombre>
+        <NumeroTelefono>60664592</NumeroTelefono>
+        <Correo>derrick2006.gs@gmail.com</Correo>
+    </Usuario>
+    <Usuario id="123456789">
+        <Nombre>raul</Nombre>
+        <NumeroTelefono>12345678</NumeroTelefono>
+        <Correo>derrick2006.gs@gmail.com</Correo>
+    </Usuario>
+</root>
