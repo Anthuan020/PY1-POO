@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.target=UsuarioManager
+comment1.params=
+comment1.target=UsuarioManager()
+comment2.params=
+comment2.target=UsuarioManager\ getInstancia()
+comment3.params=usuario
+comment3.target=void\ agregar(logicabancaria.Usuario)
+comment4.params=id
+comment4.target=logicabancaria.Usuario\ buscarUsuarioPorId(java.lang.String)
+comment5.params=m
+comment5.target=void\ setUsuarios(java.util.List)
+comment6.params=
+comment6.target=java.util.List\ getUsuarios()
+numComments=7

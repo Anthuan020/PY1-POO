@@ -27,7 +27,7 @@ public class Transaccion {
     public LocalDate getDate() {
         return date;
     }
-
+    
     public double getCommission() {
         return commission;
     }

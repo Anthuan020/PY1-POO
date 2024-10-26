@@ -4,6 +4,8 @@ import logicabancaria.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class UsuarioManager {
     private static UsuarioManager instancia;
     private List<Usuario> usuarios;
@@ -32,8 +34,14 @@ public class UsuarioManager {
         return null;
     }
     
-    public List<Usuario> getUsuarios() {
-    return usuarios;
+    public void setUsuarios(List<Usuario> m){
+        this.usuarios = m;
+        System.out.println("Usuarios extraidos");
     }
-
+    
+    public  List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+        
+        
 }

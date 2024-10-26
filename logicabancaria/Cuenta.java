@@ -21,6 +21,12 @@ public class Cuenta {
         this.balance += pAmount;
     }
     
+    public Cuenta(Usuario pUser, String pPIN, double pAmount, int pId) {
+        this.id = pId;
+        this.owner = pUser;
+        this.pin = pPIN;
+        this.balance += pAmount;
+    }
     // Funciones Auxiliares
     private void cashWithdrawalAux(double pAmount) {
         this.balance -= pAmount;
@@ -54,7 +60,11 @@ public class Cuenta {
             }
         }
     }
-
+    
+    public void addTransaccion(Transaccion t){
+        this.transactions.add(t);
+    }
+    
     public void cashDeposit(double pAmount) {
         LocalDate date = LocalDate.now();
         double commission = 0;
